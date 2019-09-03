@@ -1,9 +1,8 @@
 var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
-var User = require("../models/users")
-passport.serializeUser((user,done) => {
-  done(null,user.username)
-})
+var User = require("../models/users");
+
+
 
 passport.use(new GitHubStrategy({
     clientID: process.env.ClientID,
@@ -16,12 +15,25 @@ passport.use(new GitHubStrategy({
       name: profile.name,
       email:profile.email
     };
-    user.findone({email:user.email},(err,findedUser) => {
-      if(err)
+    User.findone({email:user.email},(err,foundUser) => {
+      if(err) return cb(err);
+      if(!foundUser) {
+        // save 
+      }
+     cb(null, foundUser);
+
     })
-    // User.findOrCreate({ githubId: profile.id }, function (err, user) {
-    //   return cb(err, user);
-    // });
-    return cb(null, user);
+  
   }
 ));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+});
+
+passport.deserializeUser((id, done)=> {
+  User.findById(id, (err, user) => {
+    // handle error 
+    done(null, user);
+  })
+})
