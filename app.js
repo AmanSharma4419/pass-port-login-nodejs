@@ -9,10 +9,11 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var mongoose = require("mongoose");
 var MongoStore = require('connect-mongo')(session);
+var passport = require('passport');
 //requiring the env file
 var dotenv = require("dotenv");
 
-dotenv.config()
+dotenv.config();
 
 //connection with database
 mongoose.connect("mongodb://localhost/info", {useNewUrlParser:true}, (err) => {
@@ -44,7 +45,8 @@ app.use(session({
   saveUninitialized:  true,
   store: new MongoStore({mongooseConnection: mongoose.connection})//used to save sessions in the mongoose database so after stopping the server it does not deleted
 }));
-//creating the env moddleware
+app.use(passport.initialize());
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

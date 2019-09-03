@@ -10,14 +10,11 @@ var passport = require("passport");
 //handling the route using the passport
 router.get("/auth/github" , passport.authenticate("github"));
 
-// router.get("/auth/github" , (req,res) => {
-//   console.log("routes")
-// })
-
-router.get("auth/github/callback",
-  passport.authenticate("github", {faliureRedirect: "/login"}),
-  function(req,res) {
-    res.redirect("/")
-  }
-)
+//handling the route from startegy
+router.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 module.exports = router;
