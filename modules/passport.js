@@ -18,12 +18,13 @@ passport.use(new GitHubStrategy({
     User.findone({email:user.email},(err,foundUser) => {
       if(err) return cb(err);
       if(!foundUser) {
-        // save 
+        User.create(user,(err,createdUser) =>{
+          if(err) console.log("error-occured")
+          console.log(createdUser)
+        })
       }
      cb(null, foundUser);
-
     })
-  
   }
 ));
 

@@ -1,4 +1,4 @@
-//all requires
+//All requires
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -10,18 +10,20 @@ var usersRouter = require('./routes/users');
 var mongoose = require("mongoose");
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
+
 //requiring the env file
 var dotenv = require("dotenv");
 
+//Extracting the env file
 dotenv.config();
 
 //connection with database
 mongoose.connect("mongodb://localhost/info", {useNewUrlParser:true}, (err) => {
   err ? console.log(err) : console.log("mongodb connected")
 });
+
 //require passport.js
 require('./modules/passport');
-//handling the routes
 
 //mounting the express-app
 var app = express();
@@ -66,5 +68,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+// Exporting the router
 module.exports = app;
