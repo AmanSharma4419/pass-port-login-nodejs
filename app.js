@@ -49,7 +49,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 
-
+// Handling the route paths
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

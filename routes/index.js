@@ -18,4 +18,5 @@ router.get('/auth/github/callback',
     console.log(req.session);
     res.redirect('/');
   });
+  // Exporting the route
 module.exports = router;
